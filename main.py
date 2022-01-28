@@ -41,7 +41,7 @@ def num0_equals_2num1(input : str):
 
 def generate_string(min_length, max_length):
     """
-        Generates a string of 0's and 1's with the given
+        Generates a random string of 0's and 1's with the given
         min and max lengths
     """
     generated_string = ""
