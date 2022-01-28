@@ -14,10 +14,18 @@ class TuringMachine2:
         self._head = 0       # initial head
     
     def restart_machine(self):
+        """
+            Restart the state to start state
+            Restart the head to the beginning of the tape
+        """
         self._state = "qs"
         self._head = 0
 
     def read_input(self, input: str = ""):
+        """
+            This function won't make much sense if you don't have the state
+            diagram since it is programmed exactly according to the state diagram
+        """
         tape = []
         for symbol in input:
             tape.append(symbol)
