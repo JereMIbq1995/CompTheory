@@ -1,13 +1,15 @@
-class TuringMachine1:
+class TuringMachine2:
     """
-        This is the machine for Exercise 3.8a
-        It should recognize all strings that have the same number 1's as 0's
-        (Including the empty string)
+        This is the machine for Exercise 3.8b
+        It should recognize all strings that have 2 times as many 0's as 1's
+        (NOT including the empty string, even though it's not that hard to make
+        it accept the empty string as well)
         It is built based on my state machine diagram number 1 included in
             this repository
     """
     def __init__(self):
-        self._valid_states = ["qs", "q0", "q1", "q2", "q3", "q_accept", "q_reject"]
+        # I'm actually not using this list. Maybe you can find a good use for it?
+        self._valid_states = ["qs", "q0", "q1", "q01", "q00", "q10", "q2", "q3", "q_accept", "q_reject"]
         self._state = "qs"   # start state
         self._head = 0       # initial head
     
@@ -27,29 +29,29 @@ class TuringMachine1:
                 if tape[self._head] == '0':
                     tape[self._head] = '_'
                     self._head += 1
-                    self._state = "q1"
+                    self._state = "q0"
                 elif tape[self._head] == '1':
                     tape[self._head] = '_'
                     self._head += 1
-                    self._state = "q0"
-                elif tape[self._head] == '_':
-                    self._head += 1
-                    self._state = "q_accept"
-                    halted = True
-            
-            elif (self._state == "q1"):
-                if tape[self._head] == 'X' or tape[self._head] == '0':
-                    self._head += 1
-                elif tape[self._head] == '1':
-                    tape[self._head] = 'X'
-                    self._head -= 1
-                    self._state = "q2"
+                    self._state = "q1"
                 elif tape[self._head] == '_':
                     self._head += 1
                     self._state = "q_reject"
                     halted = True
             
-            elif (self._state == "q0"):
+            elif (self._state == "q1"):
+                if tape[self._head] == 'X' or tape[self._head] == '1':
+                    self._head += 1
+                elif tape[self._head] == '0':
+                    tape[self._head] = 'X'
+                    self._head += 1
+                    self._state = "q10"
+                elif tape[self._head] == '_':
+                    self._head += 1
+                    self._state = "q_reject"
+                    halted = True
+            
+            elif (self._state == "q10"):
                 if tape[self._head] == 'X' or tape[self._head] == '1':
                     self._head += 1
                 elif tape[self._head] == '0':
@@ -62,16 +64,8 @@ class TuringMachine1:
                     halted = True
             
             elif (self._state == "q2"):
-                if tape[self._head] == 'X':
+                if tape[self._head] == 'X' or tape[self._head] == '1' or tape[self._head] == '0':
                     self._head -= 1
-                elif tape[self._head] == '1':
-                    tape[self._head] = 'X'
-                    self._head += 1
-                    self._state = "q0"
-                elif tape[self._head] == '0':
-                    tape[self._head] = 'X'
-                    self._head += 1
-                    self._state = "q1"
                 elif tape[self._head] == '_':
                     self._head += 1
                     self._state = "q3"
@@ -82,14 +76,54 @@ class TuringMachine1:
                 elif tape[self._head] == '1':
                     tape[self._head] = 'X'
                     self._head += 1
-                    self._state = "q0"
+                    self._state = "q1"
                 elif tape[self._head] == '0':
                     tape[self._head] = 'X'
                     self._head += 1
-                    self._state = "q1"
+                    self._state = "q0"
                 elif tape[self._head] == '_':
                     self._head += 1
                     self._state = "q_accept"
+                    halted = True
+            
+            elif (self._state == "q0"):
+                if tape[self._head] == 'X':
+                    self._head += 1
+                elif tape[self._head] == '1':
+                    tape[self._head] = 'X'
+                    self._head += 1
+                    self._state = "q01"
+                elif tape[self._head] == '0':
+                    tape[self._head] = 'X'
+                    self._head += 1
+                    self._state = "q00"
+                elif tape[self._head] == '_':
+                    self._head += 1
+                    self._state = "q_reject"
+                    halted = True
+            
+            elif (self._state == "q00"):
+                if tape[self._head] == 'X' or tape[self._head] == '0':
+                    self._head += 1
+                elif tape[self._head] == '1':
+                    tape[self._head] = 'X'
+                    self._head -= 1
+                    self._state = "q2"
+                elif tape[self._head] == '_':
+                    self._head += 1
+                    self._state = "q_reject"
+                    halted = True
+            
+            elif (self._state == "q01"):
+                if tape[self._head] == 'X' or tape[self._head] == '1':
+                    self._head += 1
+                elif tape[self._head] == '0':
+                    tape[self._head] = 'X'
+                    self._head -= 1
+                    self._state = "q2"
+                elif tape[self._head] == '_':
+                    self._head += 1
+                    self._state = "q_reject"
                     halted = True
         
         return self._state
