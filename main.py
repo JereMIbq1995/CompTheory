@@ -77,7 +77,7 @@ def test_turing_machine1(num_test_cases : int = 10, string_min : int = 10, strin
         normal_result = num0_equals_num1(generated_string)
         
         result = "SUCCESS!" if (tm_result == normal_result) else "FAILED!"
-        print(result + "  :  " + tm_result + "  :  " + normal_result + "  :  " + generated_string)
+        # print(result + "  :  " + tm_result + "  :  " + normal_result + "  :  " + generated_string)
         
         if result == "FAILED!":
             failed_cases.append(generated_string)
@@ -114,7 +114,7 @@ def test_turing_machine2(num_test_cases : int = 10, string_min : int = 10, strin
         normal_result = num0_equals_2num1(generated_string)
         
         result = "SUCCESS!" if (tm_result == normal_result) else "FAILED!"
-        print(result + "  :  " + tm_result + "  :  " + normal_result + "  :  " + generated_string)
+        # print(result + "  :  " + tm_result + "  :  " + normal_result + "  :  " + generated_string)
         
         if result == "FAILED!":
             failed_cases.append(generated_string)
@@ -133,8 +133,8 @@ def main():
         You can change the number of test cases to 1 million if you'd like,
             but that would take a while to run
     """
-    test_turing_machine1(num_test_cases = 100, string_min = 10, string_max = 30)
-    test_turing_machine2(num_test_cases = 1000, string_min = 20, string_max = 100)
+    test_turing_machine1(num_test_cases = 100000, string_min = 10, string_max = 30)
+    test_turing_machine2(num_test_cases = 100000, string_min = 20, string_max = 100)
 
 if __name__ == "__main__":
     main()
